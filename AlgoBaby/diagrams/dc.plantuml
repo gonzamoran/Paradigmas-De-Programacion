@@ -1,0 +1,43 @@
+@startuml
+
+class AlgoBaby {
+
+    + AlgoBaby()
+    + armar(Modulo m)
+    + costo()
+    + procesamiento()
+
+    - verificarCarga(Modulo m)
+}
+abstract class Modulo {
+    - int cantidad;
+    - int costoPorCantidad;
+
+    + Modulo(cantidad, costoPorCantidad)
+    + double costo(acumulado)
+    + double cantidad(List<Modulo> modulos)
+    + double {abstract} procesamiento(acumulado)
+
+}
+
+class Basico {
+    + Basico(cantidad)
+    + double procesamiento(acumulado)
+}
+
+class Intermedio {
+    + Intermedio(cantidad))
+    + double procesamiento(acumulado)
+}
+
+class Avanzado {
+    + Avanzado(cantidad)
+    + double procesamiento(acumulado)
+}
+
+Modulo <|-- Basico
+Modulo <|-- Intermedio
+Modulo <|-- Avanzado
+
+AlgoBaby *- Modulo
+@enduml

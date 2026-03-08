@@ -1,0 +1,43 @@
+@startuml
+title Caso 2: Obra con más de 50kg de hierro (Rechazada)
+actor Test
+participant "a:Albanil" as A
+participant "h:Herrero" as H
+participant "ing:IngenieroCivil" as I
+participant "o:Obra" as O
+
+' Inicialización
+create A
+Test -> A: new()
+
+create H
+Test -> H: new(60, false)
+note right of H: > 50kg, requiere firma
+
+create I
+Test -> I: new(false)
+note right of I: No aprueba
+
+create O
+Test -> O: new()
+
+Test -> O: agregarTrabajador(a)
+Test -> O: agregarTrabajador(h)
+Test -> O: asignarIngeniero(ing)
+
+' Ejecución
+Test -> O: calcularCosto()
+activate O
+    O -> H: requiereFirmaIngeniero()
+    activate H
+    H --> O: true
+    deactivate H
+    
+    O -> I: estaAprobado()
+    activate I
+    I --> O: false
+    deactivate I
+    
+    O --> Test: lanza Excepcion("No se puede presupuestar")
+deactivate O
+@enduml

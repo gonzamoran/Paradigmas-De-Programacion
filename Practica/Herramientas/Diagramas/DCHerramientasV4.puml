@@ -1,0 +1,100 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+title Version 4
+
+class Aldeano {
+    +usar(): int
+}
+class Herrero {
+    +crearHacha(): Hacha
+    +crearPico(): Pico
+    +crearAzada(): Azada
+    +reparar(unaHerramienta: Herramienta): void
+    +templar(unaHerramienta: Herramienta): Herramienta
+}
+
+abstract class Herramienta {
+    #durabilidad :int
+    +usar(): int
+    +templar(): Herramienta
+}
+
+abstract class Hacha {
+    {static} +crearHacha(): Hacha
+    +usar(): int
+    +templar(): Hacha
+}
+
+abstract class Pico {
+    {static} +crearPico(): Pico
+    +usar(): int
+    +templar(): Pico
+}
+
+abstract class Azada {
+    {static} +crearAzada(): Azada
+    +usar(): int
+    +templar(): Azada
+}
+
+class HachaNoTemplada {
+    +templar(): HachaTemplada
+    +usar(): int
+}
+
+class HachaTemplada {
+    +templar(): HachaTemplada
+    +usar(): int
+}
+
+class PicoNoTemplado {
+    +templar(): PicoTemplado
+    +usar(): int
+}
+
+class PicoTemplado {
+    -usos: int
+    +templar(): PicoTemplado
+    +usar(): int
+}
+
+class AzadaNoTemplada {
+    -usos: int
+    +usar(): int
+    +templar(): AzadaTemplada
+    -serieFibonacciElementoNro(n: int): int
+}
+
+class AzadaTemplada {
+    +usar(): int
+    +templar(): AzadaTemplada
+}
+
+
+Herramienta <<Abstract>>
+
+Aldeano ..> Herramienta
+Herrero ..> Herramienta
+
+Herramienta <|-- Hacha
+Herramienta <|-- Pico
+Herramienta <|-- Azada
+
+Hacha <<Abstract>>
+Pico <<Abstract>>
+Azada <<Abstract>>
+
+Hacha <|-- HachaNoTemplada
+Hacha <|-- HachaTemplada
+
+Pico <|-- PicoNoTemplado
+Pico <|-- PicoTemplado
+
+Azada <|-- AzadaNoTemplada
+Azada <|-- AzadaTemplada
+
+@enduml

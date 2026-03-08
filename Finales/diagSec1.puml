@@ -1,0 +1,47 @@
+@startuml
+participant "Test" as Test
+
+== Inicialización ==
+Test -> "acuatico:Acuatico" as Amb ** : <<create>> new Acuatico()
+Test -> "base:TRex" as TRex ** : <<create>> new TRex()
+Test -> "mutTrex:Tsunami" as Tsu ** : <<create>> new Tsunami(baseTRex)
+Test -> "base:Velociraptor" as Velo ** : <<create>> new Velociraptor()
+Test -> "mutVelo:PicadaAerea" as Pic ** : <<create>> new PicadaAerea(baseVelo)
+
+== T-Rex ataca ==
+Test -> Tsu : atacar(acuatico)
+activate Tsu
+Tsu -> TRex : atacar(acuatico)
+TRex --> Tsu : 50
+Tsu -> Amb : aplicarTsunami(50)
+activate Amb
+note right of Amb: Retorna 50 * 2 = 100
+Amb --> Tsu : 100
+deactivate Amb
+Tsu --> Test : 100
+deactivate Tsu
+
+Test -> Pic : recibirDanio(100)
+activate Pic
+Pic -> Velo : recibirDanio(100)
+Velo --> Pic
+Pic --> Test
+deactivate Pic
+
+== Velociraptor contraataca ==
+Test -> Pic : atacar(acuatico)
+activate Pic
+Pic -> Velo : atacar(acuatico)
+note right of Velo: 1er ataque = 20
+Velo --> Pic : 20
+Pic -> Amb : aplicarPicadaAerea(20)
+activate Amb
+note right of Amb: Retorna daño base (20)
+Amb --> Pic : 20
+deactivate Amb
+Pic --> Test : 20
+deactivate Pic
+
+Test -> Tsu : recibirDanio(20)
+Tsu -> TRex : recibirDanio(20)
+@enduml

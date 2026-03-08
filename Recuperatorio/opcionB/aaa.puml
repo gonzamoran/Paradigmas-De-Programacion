@@ -1,0 +1,41 @@
+@startuml
+
+participant ": TestCase" as test
+participant ": AlgoBaby" as algo
+participant "b: Basico" as basico
+participant "i: Intermedio" as intermedio
+participant "Modulo" as modulo
+
+' 1. El Test crea a AlgoBaby
+create algo
+test -> algo: AlgoBaby()
+
+
+    ' 2. AlgoBaby inicializa sus dependencias (Usa el create aquí)
+    ' La palabra clave 'create' hace que la linea de vida de 'basico' empiece aqui
+create basico
+test -> basico: << create >> Basico(2)
+
+create intermedio
+test -> intermedio: << create >> Intermedio(3)
+
+
+
+' 3. El resto del flujo (ya los objetos existen y AlgoBaby los conoce)
+test -> algo: costo()
+activate algo
+    loop todo modulo
+            algo -> modulo: acumulador = costo(acumulador)
+    end
+algo --> test: [3400]
+deactivate algo
+
+test -> algo: procesamiento()
+activate algo
+    loop todo modulo
+            algo -> modulo: acumulador = procesamiento(acumulador)
+    end
+algo --> test: [13]
+deactivate algo
+
+@enduml

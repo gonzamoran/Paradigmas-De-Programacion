@@ -1,0 +1,43 @@
+@startuml
+title Caso 3: Paquete de obras con descuento
+actor Test
+participant "o1:Obra" as O1
+participant "o2:Obra" as O2
+participant "c:Cliente" as C
+
+' Inicialización
+note over Test: Configuración previa de Obras...
+create O1
+Test -> O1: new()
+create O2
+Test -> O2: new()
+
+create C
+Test -> C: new()
+
+Test -> C: contratar(o1)
+Test -> C: contratar(o2)
+
+' Ejecución
+Test -> C: costoTotal()
+activate C
+    C -> O1: calcularCosto()
+    activate O1
+    O1 --> C: 5000
+    deactivate O1
+    
+    C -> O2: calcularCosto()
+    activate O2
+    note right: Incluye +10% por altura
+    O2 --> C: 30800
+    deactivate O2
+    
+    note right of C
+      Suma = 35800
+      Cant. Obras >= 2
+      Aplica descuento 20%
+    end note
+    
+    C --> Test: 28640
+deactivate C
+@enduml

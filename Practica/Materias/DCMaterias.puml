@@ -1,0 +1,49 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Materia {
+    -cupo: int
+    -cupoH: int
+    -cupoM: int
+    -cupoO: int
+    {static}+conCupoPorGenero(H: int, M: int, O: int): int
+    +registrar(): void
+    +obtenerAlumno(): Alumno
+    -restarCupo(unCupo: int): int
+}
+
+class Alumno {
+    -nombre: string
+    -padron: int
+    {static}+con(nombre: string, padron: int, genero: char): int
+    +tienePadron(unPadron: int): void
+    +entraEnElCupo(unaMateria: Materia): void
+}
+
+class Genero {
+    {static} +deLetra(unaLetra: char): Genero
+    +restarCupo(unaMateria: Materia): void
+}
+
+class Hombre {
+    +restarCupo(unaMateria: Materia): void
+}
+class Mujer {
+    +restarCupo(unaMateria: Materia): void
+}
+class Otro {
+    +restarCupo(unaMateria: Materia): void
+}
+
+Materia o--> Alumno
+Alumno *--> Genero
+Genero <|-- Hombre
+Genero <|-- Mujer
+Genero <|-- Otro
+
+
+
+@enduml

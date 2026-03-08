@@ -1,0 +1,31 @@
+@startuml
+
+participant ": TestCase" as test
+participant ": AlgoBaby" as algo
+participant "b: Basico" as basico
+participant "i: Intermedio" as intermedio
+participant "a: Avanzado" as avanzado
+participant  ": AlgoBabyFull" as error
+
+create algo
+test -> algo: AlgoBaby()
+
+create basico
+test -> basico: Basico(3)
+
+create intermedio
+test -> intermedio: Intermedio(2)
+
+create avanzado
+test -> avanzado: Avanzado(1)
+
+
+test -> algo: armar(b)
+test -> algo: armar(i)
+test -> algo: armar(a)
+
+algo -> algo: verificarCarga(a)
+
+create error
+algo -> error: throw
+@enduml

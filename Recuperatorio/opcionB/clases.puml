@@ -1,0 +1,74 @@
+@startuml
+
+'===========================
+' CLASE ABSTRACTA
+'===========================
+abstract class Gremio {
+    +Gremio()
+    +double calcularCosto()
+}
+
+'===========================
+' SUBCLASES
+'===========================
+class Electricista extends Gremio {
+    -int metrosCable
+    -boolean armaTablero
+    +Electricista(int metrosCable, boolean armaTablero)
+    +double calcularCosto()
+}
+
+class Herrero extends Gremio {
+    -double kilosHierro
+    -boolean trabajaAltura
+    +Herrero(double kilosHierro, boolean trabajaAltura)
+    +boolean requiereIngCivil()
+    +double calcularCosto()
+}
+
+class Albanil extends Gremio {
+    +Albanil()
+    +double calcularCosto()
+}
+
+'===========================
+' OBRA
+'===========================
+class Obra {
+    -List<Gremio> gremios
+    -boolean aprobadoIngCivil
+    +Obra()
+    +void agregarGremio(Gremio g)
+    +void aprobarIngCivil()
+    +double calcularCostoTotal()
+}
+
+'===========================
+' PAQUETE DE OBRAS
+'===========================
+class PaqueteObras {
+    -List<Obra> obras
+    +PaqueteObras()
+    +void agregarObra(Obra o)
+    +double calcularCostoTotalPaquete()
+}
+
+'===========================
+' RELACIONES
+'===========================
+
+' Herencia
+Gremio <|-- Electricista
+Gremio <|-- Herrero
+Gremio <|-- Albanil
+
+' Obra contiene varios gremios
+Obra o-- "1..*" Gremio : contiene >
+
+' Paquete contiene varias obras
+PaqueteObras o-- "1..*" Obra : agrupa >
+
+' Obra consulta Herrero por requerir Ing Civil
+Obra ..> Herrero : depende >
+
+@enduml

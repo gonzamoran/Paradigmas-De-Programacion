@@ -1,0 +1,52 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Ambiente {
+  + aplicarTsunami(ataqueBase: double): double
+  + aplicarPicadaAerea(ataqueBase: double): double
+}
+
+class Terrestre implements Ambiente
+class Acuatico implements Ambiente
+class Aereo implements Ambiente
+
+interface Dinosaurio <<Component>> {
+  + getVida(): double
+  + estaVivo(): boolean
+  + atacar(ambiente: Ambiente): double
+  + recibirDanio(danio: double): void
+}
+
+class TRex implements Dinosaurio
+class Velociraptor implements Dinosaurio
+class Pteranodon implements Dinosaurio
+
+abstract class MutacionDecorador <<Decorator>> implements Dinosaurio {
+  # dinosaurioBase: Dinosaurio
+  + MutacionDecorador(base: Dinosaurio)
+}
+
+class Tsunami extends MutacionDecorador {
+  + atacar(ambiente: Ambiente): double
+}
+class PicadaAerea extends MutacionDecorador {
+  + atacar(ambiente: Ambiente): double
+}
+class Blindada extends MutacionDecorador {
+  + recibirDanio(danio: double): void
+}
+
+class Manada <<Composite>> implements Dinosaurio {
+  - integrantes: List<Dinosaurio>
+  + agregar(d: Dinosaurio)
+  + remover(d: Dinosaurio)
+  + atacar(ambiente: Ambiente): double
+  + recibirDanio(danio: double): void
+}
+
+MutacionDecorador o--> "1" Dinosaurio : decora
+Manada o--> "*" Dinosaurio : contiene
+Tsunami ..> Ambiente : Double Dispatch
+PicadaAerea ..> Ambiente : Double Dispatch
+
+@enduml

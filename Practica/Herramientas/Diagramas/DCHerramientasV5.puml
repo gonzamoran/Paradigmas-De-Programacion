@@ -1,0 +1,87 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+title Version 5
+
+class Aldeano {
+    +usar(): int
+}
+class Herrero {
+    +crearHacha(): Hacha
+    +crearPico(): Pico
+    +crearAzada(): Azada
+    +reparar(unaHerramienta: Herramienta): void
+    +templar(unaHerramienta: Herramienta): Herramienta
+}
+
+abstract class Herramienta {
+    +usar(): int
+    +templar(): void
+}
+
+class Hacha {
+    {static} +crearHacha(): Hacha
+    +templar(): void
+}
+
+class Pico {
+    {static} +crearPico(): Pico
+    +templar(): void
+}
+
+class Azada {
+    {static} +crearAzada(): Azada
+    +templar(): void
+}
+
+abstract class Durabilidad {
+    #durabilidad: int
+    +usar(): int
+    +reparar(): void
+}
+
+class DurabilidadLineal {
+    +usar(): int
+}
+
+class DurabilidadFibonacci {
+    -usos: int
+    +usar(): int
+    +reparar(): void
+    -serieFibonacciElementoNro(n: int): int
+}
+
+class DurabilidadInfinita {
+    +usar(): int
+}
+
+class DurabilidadEscalon {
+    -usos: int
+    -escalon: int
+    +reparar(): void
+    +usar(): int
+}
+
+
+Herramienta <<Abstract>>
+
+Aldeano ..> Herramienta
+Herrero ..> Herramienta
+
+Herramienta <|-- Hacha
+Herramienta <|-- Pico
+Herramienta <|-- Azada
+
+Durabilidad <<Abstract>>
+
+Durabilidad <|-- DurabilidadLineal
+Durabilidad <|-- DurabilidadInfinita
+Durabilidad <|-- DurabilidadEscalon
+Durabilidad <|-- DurabilidadFibonacci
+
+Herramienta *-right- Durabilidad
+
+@enduml

@@ -1,0 +1,3 @@
+[submodule "TP_Paradigmas"]
+	path = TP_Paradigmas
+	url = git@github.com:gonzamoran/TP_Paradigmas.git

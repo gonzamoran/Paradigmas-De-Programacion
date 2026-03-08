@@ -1,0 +1,32 @@
+@startuml
+title A Una Materia No Se Pueden Inscribir Alumnos Pasado El Cupo
+skinparam monochrome true
+hide footbox
+
+participant "TestCase" as Actor
+participant "m:Materia" as materia
+participant "Genero" as genero
+participant "pablo:Alumno" as pablo
+participant ":CupoExcedidoError" as error
+
+Actor -> materia : registrar(pablo)
+activate materia
+    materia -> pablo : entraEnElCupo(m)
+    activate pablo
+        pablo -> genero : restarCupo(m)
+        activate genero
+            alt Hombre
+                activate materia 
+                genero -> materia: restarCupoH()
+            else Mujer
+                genero -> materia: restarCupoM()
+            else Otro
+                genero -> materia: restarCupoO()
+            end
+                create error
+                materia -> error: <<Create>> __Signal__
+            deactivate materia
+        deactivate genero
+    deactivate pablo
+deactivate materia
+@enduml

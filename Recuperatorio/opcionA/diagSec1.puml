@@ -1,0 +1,72 @@
+@startuml
+title Diagrama de Secuencia: Validación de Seguridad en Obra
+skinparam style strictuml
+actor Test
+participant "a:Albanil" as A
+participant "h:Herrero" as H
+participant "ing:IngenieroCivil" as I
+participant "o:Obra" as O
+
+' --- 1. INICIALIZACIÓN (Creation) ---
+note over Test: Configuración del escenario
+
+create A
+Test -> A: new()
+
+create H
+Test -> H: new(60, false)
+note right of H: 60kg > 50kg (Peligroso)
+
+create I
+Test -> I: new(false)
+note right of I: Matricula vencida / No aprueba
+
+create O
+Test -> O: new()
+
+' --- 2. ARMADO DE LA RELACIÓN ---
+Test -> O: agregarTrabajador(a)
+Test -> O: agregarTrabajador(h)
+Test -> O: asignarIngeniero(ing)
+
+' --- 3. EJECUCIÓN (El chequeo) ---
+note over Test: Intento de cálculo
+
+Test -> O: calcularCosto()
+activate O
+
+    ' Bucle sobre trabajadores
+    loop para cada trabajador (t)
+        
+        ' A. Primer filtro: Polimorfismo
+        ' La Obra no sabe que es un Herrero, solo pregunta si requiere firma
+        O -> A: requiereFirmaIngeniero()
+        activate A
+        A --> O: false
+        deactivate A
+        
+        O -> H: requiereFirmaIngeniero()
+        activate H
+        H --> O: true
+        deactivate H
+        
+        ' B. Segundo filtro: Validación de Autoridad
+        alt Si requiere firma (true)
+            
+            O -> I: estaAprobado()
+            activate I
+            I --> O: false
+            deactivate I
+            
+            alt Si no está aprobado
+                note right of O: Fail Fast: Se detiene el proceso\npara evitar cobros ilegales.
+                O --> Test: lanza Excepción("Falta aprobación")
+            end
+            
+        end
+    end
+
+    ' Si llegara aquí, calcularía costos, pero la excepción lo impidió
+    
+deactivate O
+@enduml

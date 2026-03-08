@@ -1,0 +1,62 @@
+@startuml
+title Diagrama de Clases - AlgoDeco
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+interface Trabajador {
+    + {abstract} calcularCosto(): double
+    + {abstract} requiereFirmaIngeniero(): boolean
+}
+
+class Electricista {
+    - metrosCable: int
+    - armaTablero: boolean
+    + Electricista(metros: int, tablero: boolean)
+    + calcularCosto(): double
+    + requiereFirmaIngeniero(): boolean
+}
+
+class Herrero {
+    - kilosHierro: double
+    - trabajaAltura: boolean
+    + Herrero(kilos: double, altura: boolean)
+    + calcularCosto(): double
+    + requiereFirmaIngeniero(): boolean
+}
+
+class Albanil {
+    + Albanil()
+    + calcularCosto(): double
+    + requiereFirmaIngeniero(): boolean
+}
+
+class IngenieroCivil {
+    - aprueba: boolean
+    + IngenieroCivil(aprueba: boolean)
+    + estaAprobado(): boolean
+}
+
+class Obra {
+    + Obra()
+    + agregarTrabajador(t: Trabajador)
+    + asignarIngeniero(i: IngenieroCivil)
+    + calcularCosto(): double
+}
+
+class Cliente {
+    + Cliente()
+    + contratar(o: Obra)
+    + costoTotal(): double
+}
+
+' Relaciones
+Trabajador <|.. Electricista
+Trabajador <|.. Herrero
+Trabajador <|.. Albanil
+
+Obra o-down- "*" Trabajador : tiene >
+Obra -right-> "0..1" IngenieroCivil : valida <
+
+Cliente o-right- "*" Obra : contrata >
+
+@enduml

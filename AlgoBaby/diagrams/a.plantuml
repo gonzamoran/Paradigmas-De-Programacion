@@ -1,0 +1,19 @@
+@startuml
+
+autonumber
+actor Sistema
+participant ":Usuario" as U
+participant ":Viaje (01/09)" as V1
+participant "id1:TarjetaTrabajador" as T1
+participant ":Viaje (03/09)" as V2
+participant "id2:TarjetaTrabajador" as T2note over U, T2: Inicio del cálculo de total para Escenario ASistema -> U: calcularTotalPagado()' Primer Viaje
+U -> V1: getMonto()
+V1 -> T1: calcularCosto(35, "2024/09/01")
+T1 --> V1: 5250
+V1 --> U: 5250' Segundo Viaje
+U -> V2: getMonto()
+V2 -> T2: calcularCosto(15, "2024/09/03")
+T2 --> V2: 2250
+V2 --> U: 2250U --> Sistema: 7500 (Total)
+@enduml
+

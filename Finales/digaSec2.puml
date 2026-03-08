@@ -1,0 +1,42 @@
+@startuml
+participant "Test" as Test
+participant "terrestre:Terrestre" as Amb
+participant "ptera:Pteranodon" as Ptera
+participant "blindada:Blindada" as Blin
+participant "tsunami:Tsunami" as Tsu
+participant "base:TRex" as TRex
+
+Test -> Blin : atacar(terrestre)
+activate Blin
+Blin -> Tsu : atacar(terrestre)
+activate Tsu
+Tsu -> TRex : atacar(terrestre)
+TRex --> Tsu : 50
+Tsu -> Amb : aplicarTsunami(50)
+activate Amb
+note right of Amb: Retorna daño base (50)
+Amb --> Tsu : 50
+deactivate Amb
+Tsu --> Blin : 50
+deactivate Tsu
+Blin --> Test : 50
+deactivate Blin
+
+Test -> Ptera : recibirDanio(50)
+
+Test -> Ptera : atacar(terrestre)
+activate Ptera
+note right of Ptera: 1er ataque = 30
+Ptera --> Test : 30
+deactivate Ptera
+
+Test -> Blin : recibirDanio(30)
+activate Blin
+note right of Blin: 30 <= 40. Pasa el daño.
+Blin -> Tsu : recibirDanio(30)
+Tsu -> TRex : recibirDanio(30)
+TRex --> Tsu
+Tsu --> Blin
+Blin --> Test
+deactivate Blin
+@enduml

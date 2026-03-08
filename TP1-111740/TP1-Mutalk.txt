@@ -1,0 +1,36 @@
+"Put here the classes you want to mutate"
+classesToMutate := { 
+	AlgoConsejo .
+	ColeccionVaciaError .
+	Criterio.
+	Barato.
+	Caro.
+	CriterioInvalidoError .
+	Edad.
+	Joven.
+	Veterano.
+	Futbolista.
+	FutbolistaNoEncontradoError.
+	Pais.
+	Argentina.
+	Conmebol .
+	FueraConmebol.
+	Valor .
+	ValorInvalidoError .
+ }.
+"Put here the test classes associated with"
+testClasses :=  {
+	AlgoConsejoTest.
+	AlgoConsejosTests .
+	FutbolistasTest.
+	ValorTests.
+	  }.
+
+analysis := MTAnalysis new
+    classesToMutate: classesToMutate;
+    testClasses: testClasses.
+
+analysis run.
+
+"To inspect the results"
+analysis generalResult inspect.

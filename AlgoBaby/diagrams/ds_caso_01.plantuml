@@ -1,0 +1,32 @@
+@startuml
+
+participant ": TestCase" as test
+participant ": AlgoBaby" as algo
+participant "b: Basico" as basico
+participant "i: Intermedio" as intermedio
+participant "Modulo" as modulo
+create algo
+test -> algo: AlgoBaby()
+
+create basico
+test -> basico: Basico(2)
+
+create intermedio
+test -> intermedio: Intermedio(3)
+
+test -> algo: armar(b)
+test -> algo: armar(i)
+
+test -> algo: costo()
+    loop todo modulo
+            algo -> modulo: acumulador = costo(acumulador)
+    end
+algo --> test: [3400]
+
+test -> algo: procesamiento()
+    loop todo modulo
+            algo -> modulo: acumulador = procesamiento(acumulador)
+    end
+algo --> test: [13]
+
+@enduml

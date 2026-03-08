@@ -1,0 +1,43 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+title Version 3
+
+class Aldeano {
+    +usar(): int
+}
+
+abstract class Herramienta {
+    #durabilidad :int
+    +usar(): int
+}
+
+class Hacha {
+    {static} +crearHacha(): Hacha
+    +usar(): int
+}
+
+class Pico {
+    {static} +crearPico(): Pico
+    +usar(): int
+}
+
+class Azada {
+    -usos: int
+    {static} +crearAzada(): Azada
+    +usar(): int
+    -serieFibonacciElementoNro(n: int): int
+}
+
+Herramienta <<Abstract>>
+
+Aldeano ..> Herramienta
+
+Herramienta <|-- Hacha
+Herramienta <|-- Pico
+Herramienta <|-- Azada
+
+@enduml

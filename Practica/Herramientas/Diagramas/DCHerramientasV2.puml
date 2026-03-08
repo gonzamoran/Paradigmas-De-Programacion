@@ -1,0 +1,25 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+title Version 2
+
+class Aldeano {
+    +usar(): int
+}
+
+class Herramienta {
+    -durabilidad :int
+    -usosAzada: int
+    {static} +crearHacha(): Herramienta
+    {static} +crearPico(): Herramienta
+    {static} +crearAzada(): Herramienta
+    +usar(): int
+    -serieFibonacciElementoNro(n: int): int
+}
+
+Aldeano ..> Herramienta
+
+@enduml

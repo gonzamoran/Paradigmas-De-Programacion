@@ -1,0 +1,14 @@
+Enunciado
+
+Implementar un calendario de feriados.
+
+El calendario debe tener la siguiente funcionalidad:
+
+- Permitir especificar feriados semanales 
+	(ejemplo: todos los domingos son feriados)
+- Permitir especificar feriados anuales 
+	(ejemplo: el 25/12 es feriado)
+- Permitir especificar feriados puntuales 
+	(ejemplo: el 24/09 es feriado, solo el 2012)
+- Permitir especificar feriados anuales a partir de un año 
+	(ejemplo: el 24/3 es feriado todos los años a partir del 2006)
